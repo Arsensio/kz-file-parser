@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
 
 spring:
   application:
@@ -11,13 +11,13 @@ spring:
     password: guest
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-file-size: 1000MB
+      max-request-size: 1000MB
 
 app:
   rabbit:
-    queue: pdf-lines
-    exchange: pdf-lines-exchange
-    routing-key: pdf.lines
+    queue: csv-lines
+    exchange: csv-lines-exchange
+    routing-key: csv.lines
   jwtSecret: ${AUTH_KEY:sOBNXOci4tCpIUA2uIKKnRADVGu/hFaLpBP5tC93Wf1nAueXF1VPBgF+5otQzWA580BvPlphiMSsIsKQnFnhrQ==}
   jwtExpirationMs: ${AUTH_KEY_EXPIRATION_MS:86400000}
