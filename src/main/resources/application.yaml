@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: kz-file-parser
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+app:
+  rabbit:
+    queue: pdf-lines
+    exchange: pdf-lines-exchange
+    routing-key: pdf.lines
+  jwtSecret: ${AUTH_KEY:sOBNXOci4tCpIUA2uIKKnRADVGu/hFaLpBP5tC93Wf1nAueXF1VPBgF+5otQzWA580BvPlphiMSsIsKQnFnhrQ==}
+  jwtExpirationMs: ${AUTH_KEY_EXPIRATION_MS:86400000}
