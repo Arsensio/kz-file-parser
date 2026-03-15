@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +26,10 @@ public class CsvParseController {
   @PostMapping(path = "/parse", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<ParseResult> parse(
       @RequestParam("file") MultipartFile file,
+      @RequestHeader("Authorization") String authorization,
       @RequestPart("meta") CsvParseRequest request
   ) throws IOException {
-    var result = csvParseService.parseAndSend(file, request);
+    var result = csvParseService.parseAndSend(file, request, authorization);
     return ResponseEntity.ok(result);
   }
 }

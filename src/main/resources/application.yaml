@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
   application:
@@ -13,11 +13,19 @@ spring:
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
-
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 300000
 app:
   rabbit:
     queue: csv-lines
     exchange: csv-lines-exchange
     routing-key: csv.lines
+  analytics:
+    base-url: http://localhost:8080
   jwtSecret: ${AUTH_KEY:sOBNXOci4tCpIUA2uIKKnRADVGu/hFaLpBP5tC93Wf1nAueXF1VPBgF+5otQzWA580BvPlphiMSsIsKQnFnhrQ==}
   jwtExpirationMs: ${AUTH_KEY_EXPIRATION_MS:86400000}

@@ -15,32 +15,34 @@ public interface CsvMapper {
       CSVRecord record,
       String sourceFile) {
     return new CsvAnalysisEvent(
-        getColumn(record, 0),
-        getColumn(record, 1),
-        getColumn(record, 2),
-        getColumn(record, 3),
-        getColumn(record, 4),
-        getColumn(record, 5),
-        parseInteger(getColumn(record, 6)),
-        parseDecimal(getColumn(record, 7)),
-        parseDecimal(getColumn(record, 8)),
-        parseInteger(getColumn(record, 9)),
+        getColumn(record, "Бренд", "brand"),
+        getColumn(record, "Артик", "Артикул", "article"),
+        getColumn(record, "Товар", "product"),
+        getColumn(record, "Категория3", "category3"),
+        getColumn(record, "Категория2", "category2"),
+        getColumn(record, "Категория", "category", "Категория1"),
+        parseInteger(getColumn(record, "Заказы", "orders")),
+        parseDecimal(getColumn(record, "Выручка", "revenue")),
+        parseDecimal(getColumn(record, "Ср чек", "Ср. чек", "Ср_чек", "avgCheck")),
+        parseInteger(getColumn(record, "Прод", "Продажи", "sold")),
         request.year(),
         request.month(),
         sourceFile,
         Instant.now());
   }
 
-  private String getColumn(CSVRecord record, int index) {
-    if (index < 0 || index >= record.size()) {
-      return null;
+  private String getColumn(CSVRecord record, String... headers) {
+    for (String header : headers) {
+      if (record.isMapped(header)) {
+        String value = record.get(header);
+        if (value == null) {
+          return null;
+        }
+        value = value.trim();
+        return value.isEmpty() ? null : value;
+      }
     }
-    String value = record.get(index);
-    if (value == null) {
-      return null;
-    }
-    value = value.trim();
-    return value.isEmpty() ? null : value;
+    return null;
   }
 
   private BigDecimal parseDecimal(String value) {
