@@ -25,6 +25,10 @@ app:
     queue: csv-lines
     exchange: csv-lines-exchange
     routing-key: csv.lines
+    tariffs:
+      queue: tariffs-lines
+      exchange: tariffs-lines-exchange
+      routing-key: tariffs.lines
   analytics:
     base-url: http://localhost:8080
   jwtSecret: ${AUTH_KEY:sOBNXOci4tCpIUA2uIKKnRADVGu/hFaLpBP5tC93Wf1nAueXF1VPBgF+5otQzWA580BvPlphiMSsIsKQnFnhrQ==}

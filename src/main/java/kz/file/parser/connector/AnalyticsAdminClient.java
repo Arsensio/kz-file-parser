@@ -13,4 +13,7 @@ public interface AnalyticsAdminClient {
       @RequestHeader("Authorization") String authorization,
       @RequestParam("year") Integer year,
       @RequestParam("month") Integer month);
+
+  @DeleteMapping("/api/admin/product-analytics/tariffs")
+  Integer deleteTariffs(@RequestHeader("Authorization") String authorization);
 }

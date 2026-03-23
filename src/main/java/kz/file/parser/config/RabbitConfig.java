@@ -23,10 +23,21 @@ public class RabbitConfig {
 
   @Value("${app.rabbit.routing-key}")
   private String routingKey;
+  @Value("${app.rabbit.tariffs.queue}")
+  private String tariffsQueueName;
+  @Value("${app.rabbit.tariffs.exchange}")
+  private String tariffsExchangeName;
+  @Value("${app.rabbit.tariffs.routing-key}")
+  private String tariffsRoutingKey;
 
   @Bean
   public Queue pdfLinesQueue() {
     return new Queue(queueName, true);
+  }
+
+  @Bean
+  public Queue tariffsQueue() {
+    return new Queue(tariffsQueueName, true);
   }
 
   @Bean
@@ -35,8 +46,18 @@ public class RabbitConfig {
   }
 
   @Bean
+  public DirectExchange tariffsExchange() {
+    return new DirectExchange(tariffsExchangeName);
+  }
+
+  @Bean
   public Binding pdfLinesBinding(Queue pdfLinesQueue, DirectExchange pdfLinesExchange) {
     return BindingBuilder.bind(pdfLinesQueue).to(pdfLinesExchange).with(routingKey);
+  }
+
+  @Bean
+  public Binding tariffsBinding(Queue tariffsQueue, DirectExchange tariffsExchange) {
+    return BindingBuilder.bind(tariffsQueue).to(tariffsExchange).with(tariffsRoutingKey);
   }
 
   @Bean
